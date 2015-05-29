@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<?php include("base/head.php"); ?>
+
+	<link rel="stylesheet" href="css/xmlstyle.css">
+
+</head>
+
+
+<?php include("base/nav.php"); ?>
+
+<!-- Intro Section -->
+<section id="intro" class="intro-section">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h3 class="panel-title">XML Metadata Generator for the National Digital Catalog</h3>
+					</div>
+					<div class="panel-body">
+						These are the required fields for XML Metadata.  Please fill in all <b>bold</b> fields and be sure to check the output for any errors.
+						<br><b>If you select a .zip file</b>, all items within the zip will have an XML file created for them, and returned to you in a zip with the same name.
+						<br><b>If you do not select a .zip file</b>, a single XML file will be generated for you.
+
+						<div style="display:none;" id="loading"><center><p><img src="img/loader.gif"/><br><b>Reading ZIP Contents...</b></p></center></div>
+
+						<div id="result_block">
+
+							<div id="result"></div>
+						</div>
+
+						<div id="new_titles"></div>
+						<table >
+							<tr>
+								<td><i>Zip File of Media:</i></td><td><input id="file" name="file" type="file"></td>
+
+								<tr>
+									<td><b>CollectionID: </b><a href="javascript:;">?<span class="tooltip2">A unique collection ID assigned by the National Digital Catalog to identify distinct collections. This field is
+										required but may be left blank and assigned during the file loading process within the National Digital Catalog.</span></a></td>
+										<td><input type='text' id='collectionid' size="20" value="P1300"></td>
+										<tr><td></td><td>Predefined IDs:
+											<select id="predefinedCollection">
+											  <option value="P1099">P1099 Paper Maps</option>
+											  <option value="P1292">P1292 Paper Reports</option>
+											  <option value="P1293">P1293 Paper Field Notes</option>
+											  <option value="P1294">P1294 Physical Rock Cores</option>
+												<option value="P1295">P1295 Physical Geochemical Samples</option>
+												<option value="P1296">P1296 Physical Thin Sections</option>
+												<option value="P1297">P1297 Paper Lithology Logs</option>
+												<option value="P1298">P1298 Digital Geophysical</option>
+												<option value="P1299">P1299 Digtal 2D and 3D Seismic Reflection</option>
+												<option value="P1300" selected="selected">P1300 Photographs</option>
+												<option value="P1302">P1302 Digital Seismic Data</option>
+												<option value="P1303">P1303 Digital Maps</option>
+												<option value="P1304">P1304 Digital Reports</option>
+												<option value="P1305">P1305 Digital Field Notes</option>
+												<option value="P1306">P1306 Digital Well Logs</option>
+												<option value="P1307">P1307 Paper Well Logs</option>
+												<option value="P1309">P1309 Digital Geochemical Data</option>
+												<option value="P1364">P1364 Paper 2D and 3D Seismic Reflections</option>
+												<option value="P1649">P1649 Physical Hand Samples</option>
+												<option value="P1650">P1650 Physical Rock Cuttings</option>
+												<option value="P1651">P1651 Physical Sediment Cores</option>
+
+											</select>
+										</td></tr>
+									</tr>
+									<tr>
+										<td><div id="titles"><b>Title: </b><a href="javascript:;">?<span class="tooltip2">The human-readable title for the individual record that will be used in any listing or search result. Title should be
+											short for display purposes but contain enough information to distinguish from other records. Examples: Sample:
+											Geologic Sample 160580 Sample: ID: NMDF52900064 TITLE: ISAACS BROS. LEAD-SILVER MINE; Sample:
+											Core Research Center, Cutting DD18216; Sample: Core sample from well: KNIK ARM ST 1</span></a></div></td>
+											<td><div id="titleBox"><input type='text' id='title' size="20"></div></td>
+
+										</tr>
+
+										<tr>
+											<td><b>Abstract: </b><a href="javascript:;">?<span class="tooltip2">The human-readable description of the individual record used to help determine the nature of the underlying
+												physical data resource. Due to the general nature of the Catalog, a fair amount of information about the data
+												resource may need to be captured into this one general element. Examples: Sample: Core Research Center,
+												Cutting DD18210, from well operated by St. Michael Exploration, located in Weld County, CO, under lease 2-
+												1 Grace State, with API number 0512310130. Sample: This is a geologic sample in one of the Bureau of
+												Economic Geology's three Core Research Centers. API Number: 420513299400 Top Depth: 11744 Ft.
+												Bottom Depth: 11767 Ft. sample_type_name: CORE CHIPS/CORE PLUGS sample_category_name: Core
+												formation_name: Unknown formation_age_name: Unknown facility_name: Houston reservoir_name:
+												BILOXI CREEK WILCOX operator_name: APACHE CORPORATION state_name: Texas county_name:
+												Burleson</span></a></td>
+												<td><textarea name="abstract" id="abstract" rows="5" cols="40" maxlength="253"></textarea><br><b>Please include Township/County information.</b></td>
+											</tr>
+											<tr>
+												<td><b>Data Type: </b><a href="javascript:;">?<span class="tooltip2">A controlled vocabulary of data types. An item may include multiple dataTypes, including: 1) Auger Samples, 2)
+													Fluid Samples, 3) Geochemical Samples, 4) Hand Samples, 5) Ice Cores, 6) Paleontological Samples, 7)
+													Rock Cores, 8) Rock Cuttings, 9) Sediment Cores, 10) Sidewall Cores, 11) Thin Sections and Polished
+													Sections, 12) Type Stratigraphic Sections.</span></a></td>
+													<td>
+														<fieldset id="checkArray">
+															<input type="checkbox" name="chk" value="Auger Sample"> Auger Sample</option><br>
+															<input type="checkbox" name="chk" value="Fluid Sample"> Fluid Sample</option><br>
+															<input type="checkbox" name="chk" value="Geochemical Sample"> Geochemical Sample</option><br>
+															<input type="checkbox" name="chk" value="Hand Sample"> Hand Sample</option><br>
+															<input type="checkbox" name="chk" value="Ice Core"> Ice Core</option><br>
+															<input type="checkbox" name="chk" value="Paleontological Sample"> Paleontological Sample</option><br>
+															<input type="checkbox" name="chk" value="Rock Core"> Rock Core</option><br>
+															<input type="checkbox" name="chk" value="Rock Cuttings"> Rock Cuttings</option><br>
+															<input type="checkbox" name="chk" value="Sediment Core"> Sediment Core</option><br>
+															<input type="checkbox" name="chk" value="Sidewall Core"> Sidewall Core</option><br>
+															<input type="checkbox" name="chk" value="Thin Section"> Thin Section</option><br>
+															<input type="checkbox" name="chk" value="Type Stratigraphic Section"> Type Stratigraphic Section</option><br><br>
+															<input type="checkbox" name="chk" value="Photograph"> Photograph</option><br>
+															<input type="checkbox" name="chk" value="35mm Slide"> 35mm Slide</option><br>
+															<input type="checkbox" name="chk" value="Video"> Video</option><br>
+															<input type="checkbox" name="chk" value="Other"> Other</option> <input type='text' id='otherBox' size="20" placeholder="Other data type"><br>
+
+
+
+														</fieldset>
+
+
+													</td>
+												</tr>
+												<tr>
+													<td><b>Supplemental Information: </b><a href="javascript:;">?<span class="tooltip2">This standard field will be used to provide specific information on how to access the physical data represented
+														by the metadata record. This may be general for the entire collection (e.g., a URL to another Web site) or a
+														specific reference to an online resource like an ordering system with a specific ID. Example: Sample:
+														Repository managed by the USGS Core Research Center, additional information can be found at
+														http://geology.cr.usgs.gov/crc; Sample: Web (this sample):
+														http://inet1.beg.utexas.edu/crc2/geosample.aspx?ID=160580 Phone: 512-471-0402 (Austin CRC) Phone:
+														713-466-8346 (Houston CRC</span></a></td>
+														<td><textarea name="supp" id='supplementalInformation' rows="3" cols="40">This data is available upon request by contacting NJGWS at www.state.nj.us/dep/njgs/comments.html</textarea></td>
+													</tr>
+													<tr>
+														<td><b>Coordinates: </b><a href="javascript:;">?<span class="tooltip2">Geographic longitude and latitude. Both values shall be contained in the same element and be listed in the
+															order: longitude,latitude with values separated by a comma. Example: Sample: -118.023423, 45.02312</span></a></td>
+															<td>Longitude: <input type='text' id='longitude' size="20">
+
+															</td>
+														</tr>
+														<tr>
+															<td></td><td>Latitude: <input type='text' id='latitude' size="20"></td>
+														</tr>
+														<tr>
+															<td></td><td><b>Must be in Decimal Degrees and NAD83.</b></td>
+														</tr>
+														<tr>
+															<td><b>Dataset Reference Date:<br>(Date of Upload) </b><a href="javascript:;">?<span class="tooltip2">A reference date indicating currency of the underlying data record, which may be the date the metadata record
+																was assembled for the National Digital Catalog. Proper date formats are defined in ISO 8601, which include:
+																1)yyyy, 2) yyyy-mm, 3) yyyymmdd, 4) yyyy-mm-dd2</span></a></td>
+																<td><input type='text' id='date' size="20"></td>
+
+															</tr>
+															<tr>
+																<td><td><b>Allowed formats:  YYYY, YYYY-MM, YYYYMMdd, or YYYY-MM-dd.</b></td>
+															</tr>
+															<tr>
+																<td><i>Alternate Title (Optional): </i><a href="javascript:;">?<span class="tooltip2">Collection owners may elect to provide additional title identifiers for individual records for further identification or
+																	use by other Web service interfaces. The AlternateTitle field may include either textual titles or specific sample
+																	IDs used by the collection.</span></a></td>
+																	<td><input type='text' id='alttitle' size="20"></td>
+																</tr>
+																<tr>
+																	<td><i>Alternate Geometry (Optional): </i><a href="javascript:;">?<span class="tooltip2">The underlying collection resource may use an alternate method of storing a geospatial footprint. If so, this text
+																		field should be used to describe the authoritative source for geographic location and how the simple coordinates
+																		were derived.</span></a></td>
+																		<td>
+																			<textarea name="altgeometry" id='altgeometry' rows="3" cols="40"></textarea>
+																		</td>
+																	</tr>
+
+																	<tr>
+																		<td><i>Online Resource (Optional): </i><a href="javascript:;">?<span class="tooltip2">URL pointer to textual information about the specific record.</span></a></td>
+																		<td><input type='text' id='onlineresource' size="20"></td>
+																	</tr>
+																	<tr>
+																		<td><i>Browse Graphic (Optional): </i><a href="javascript:;">?<span class="tooltip2">URL pointer to images representing the specific record.</span></a></td>
+																		<td><input type='text' id='browsegraphic' size="20"></td>
+																	</tr>
+																	<tr>
+																		<td><i>Collection Date (Optional): </i><a href="javascript:;">?<span class="tooltip2">If a meaningful date within the geosciences domain can be attached to the record (e.g., a collection date), it can
+																			be supplied here. Either date may be to any degree of precision, or may be left blank to indicate uncertainty.
+																			Examples are 2001, 2001-03, 1939-1945, 20030331, 2000-03-31.</span></a></td>
+																			<td><input type='text' id='altdate' size="20"></td>
+																		</tr>
+
+
+																		<tr>
+																			<td><i>Vertical Extent (Optional): </i><a href="javascript:;">?<span class="tooltip2">Vertical extent information can be provided and is especially useful for rock core samples. Specification of extent
+																				can contain three elements: minimum value, maximum value, and unit of measure. These elements will be
+																				collected as 2 or 3 values representing the UnitOfMeasure and MaximumValue with the possible addition of
+																				MinimumValue (e.g., m,35.4,0 for a rock core measured at 35.4 meters).</span></a></td>
+																				<td><input type='text' id='vertical' size="20"></td>
+																			</tr>
+																			<tr><td>
+																				<a href="#" download="output.xml" class="btn btn-primary" id="xml" >Generate XML / Zip</a>
+																			</td></tr>
+																		</table>
+
+
+
+
+
+
+																	</div>
+																</div>
+
+
+
+															</div>
+														</div>
+													</div>
+												</section>
+
+
+
+
+
+											</body>
+											<?php include("base/js.php"); ?>
+											<script src='js/jszip.min.js'></script>
+											<script src='js/filesaver.min.js'></script>
+											<script src='js/xml.js'></script>
+
+
+											</html>
