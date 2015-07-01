@@ -42,22 +42,45 @@ function generateRows($result, $conn, $query, $id_array, $val){
 
             $lessPath;// the modified path to the image that is shown in the table
             $imageLink = $row["Path"];// the link to the image on the shared drive
+            $extChecker;
 
+            // if the image link is a single xml file
             if(strpos($imageLink, '.xml') > 0)
             {
                 $imageLink = substr($imageLink, 0, strpos($imageLink, '.xml'));// cut off the xml part
-                $imageLink = "\\\dep-ap\Shared\LUM\NJGS\Projects\Library\Metadata_Database_Manager\\" . $row["Owner"] . "\\" . $row["Title"] . ".jpg";// assume jpg
+                $extChecker = "\\\dep-ap\Shared\LUM\NJGS\Projects\Library\Metadata_Database_Manager\\" . $row["Owner"] . "\\" . $row["Title"];
+
+                $imageLink = "\\\dep-ap\Shared\LUM\NJGS\Projects\Library\Metadata_Database_Manager\\" . $row["Owner"] . "\\" . $row["Title"];
                 $lessPath = substr($row["Path"], 0, strpos($row["Path"], '.xml'));
             }
             else {
                 $imageLink = substr($imageLink, 0, strpos($imageLink, '.zip'));
-                $imageLink = $imageLink . "\\" . $row["Title"] . ".jpg";
+                $extChecker = $imageLink . "\\" . $row["Title"];
+
+                //$imageLink = $imageLink . "\\" . $row["Title"] . ".jpg";
                 $lessPath = substr($row["Path"], 0, strpos($row["Path"], '.zip'));
 
 
             }
-            $imageLink = "<a href='util/display_image.php?path=$imageLink' >" . $row["Title"] . "</a>";// append the <a> tag to make it a link
 
+            $findExtPre = glob ($extChecker . ".*");
+
+            // if the file exists make it a hyperlink to the file, otherwise just write the name of the file.
+            if(strlen($findExtPre[0]) > 1)
+            {
+                // check for the file extension
+                $findExt = glob ($extChecker . ".*");
+
+                $imageLink = "<a href='util/display_image.php?path=$findExt[0]' >" . $row["Title"] . "</a>";// append the <a> tag to make it a link
+            }
+            else {
+
+                //$findExt = glob ($extChecker . ".*");
+                //$out .= $findExt[0];
+
+
+                $imageLink = $row["Title"];
+            }
 
             array_push($id_array, $row["xml_id"]);// add each id to the array so that we can get it later to download
 

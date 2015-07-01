@@ -11,8 +11,8 @@ class dbmanager{
 	{
 
         $servername = "127.0.0.1"; // the ip where the db is hosted, localhost at the moment
-        $username = "";
-        $password = "";
+        $username = "root";
+        $password = "rootpwd";
         $dbname = "xml_info_schema"; // schema name
 
 		//Create connection
